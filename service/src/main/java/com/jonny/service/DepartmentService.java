@@ -1,13 +1,14 @@
 package com.jonny.service;
 
 import com.jonny.dao.DepartmentDao;
-import com.jonny.exception.ServiceLayerException;
 import com.jonny.model.Department;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.security.InvalidParameterException;
 import java.util.List;
+
+import static org.apache.commons.lang3.StringUtils.isBlank;
 
 @Service
 public class DepartmentService {
@@ -20,7 +21,7 @@ public class DepartmentService {
     }
 
     public int create(Department department) {
-        if (department == null || !department.isValid())
+        if (department == null || isBlank(department.getName()))
             throw new InvalidParameterException("Can't create department. Because was got invalid department ("+department+").");
         return departmentDao.create(department);
     }
@@ -32,7 +33,7 @@ public class DepartmentService {
     }
 
     public int update(Department department) {
-        if (department == null || department.getId() == 0 || !department.isValid())
+        if (department == null || department.getId() == 0 || isBlank(department.getName()))
             throw new InvalidParameterException("Can't update department. Because was got invalid department ("+department+").");
         return departmentDao.update(department);
     }
@@ -45,8 +46,6 @@ public class DepartmentService {
 
     public List<Department> readAll() {
         List<Department> departments = departmentDao.getAll();
-        if(departments.size()==0)
-            throw new ServiceLayerException("List of employees is empty. Can't use it further.");
         return departments;
     }
 }

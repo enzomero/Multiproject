@@ -12,6 +12,9 @@ import org.springframework.web.client.RestTemplate;
 @Component
 public class DepartmentService {
 
+    final static String PORT = "9000";
+    final static String LOCALHOST = "http://localhost:";
+
     private final RestTemplate rest;
 
     @Autowired
@@ -26,7 +29,7 @@ public class DepartmentService {
     }
 
     public void readAll(ModelMap modelMap){
-        Department[] dep = rest.getForObject("http://localhost:9000/department/all", Department[].class);
+        Department[] dep = rest.getForObject(LOCALHOST+PORT+"/department/all", Department[].class);
         modelMap.put("all", dep);
     }
 
@@ -35,16 +38,16 @@ public class DepartmentService {
             department.setId(id);
             department.setName(name);
         if(id==0)
-            rest.postForLocation("http://localhost:9000/department/create", department);
-        if(id!=0)
-            rest.put("http://localhost:9000/department/update", department);
+            rest.postForLocation(LOCALHOST+PORT+"/department/create", department);
+        else
+            rest.put(LOCALHOST+PORT+"/department/update", department);
     }
 
     public void delete(int id){
         Department department = new Department();
         department.setId(id);
         department.setName("");
-        rest.postForLocation("http://localhost:9000/department/delete", department);
+        rest.postForLocation(LOCALHOST+PORT+"/department/delete", department);
     }
 
     public void edit(int id, Model model){
@@ -52,6 +55,6 @@ public class DepartmentService {
     }
 
     private Department readById(@PathVariable int id){
-        return rest.getForObject("http://localhost:9000/department/{id}", Department.class, id);
+        return rest.getForObject(LOCALHOST+PORT+"/department/{id}", Department.class, id);
     }
 }

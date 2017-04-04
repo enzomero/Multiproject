@@ -1,4 +1,4 @@
-package com.jonny.app;
+package com.jonny.controller;
 
 import com.jonny.model.Department;
 import com.jonny.service.DepartmentService;

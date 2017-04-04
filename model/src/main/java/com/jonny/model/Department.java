@@ -40,14 +40,14 @@ public class Department {
     }
 
     @Override
-    public String toString() {
-        return " Department { ID = "+id+", NAME = '"+name+"' }";
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        return result;
     }
 
-    public boolean isValid(){
-        if(this.getName() != null)
-            if(!this.getName().isEmpty())
-                return true;
-        return false;
+    @Override
+    public String toString() {
+        return " Department { ID = "+id+", NAME = '"+name+"' }";
     }
 }
