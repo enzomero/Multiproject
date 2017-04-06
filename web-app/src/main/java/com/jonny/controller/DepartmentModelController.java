@@ -1,6 +1,6 @@
 package com.jonny.controller;
 
-import com.jonny.service.DepartmentService;
+import com.jonny.service.DepartmentModelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,12 +11,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("department")
-public class DepartmentController {
+public class DepartmentModelController {
 
-    private final DepartmentService service;
+    private final DepartmentModelService service;
 
     @Autowired
-    public DepartmentController(DepartmentService service) {
+    public DepartmentModelController(DepartmentModelService service) {
         this.service = service;
     }
 

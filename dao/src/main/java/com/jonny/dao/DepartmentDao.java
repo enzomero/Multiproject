@@ -1,9 +1,11 @@
 package com.jonny.dao;
 
 import com.jonny.model.Department;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public interface DepartmentDao {
 
     int create(Department department);

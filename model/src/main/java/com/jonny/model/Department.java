@@ -1,8 +1,8 @@
 package com.jonny.model;
 
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Component;
 
-@Repository
+@Component
 public class Department {
     private int id;
     private String name;
@@ -32,18 +32,17 @@ public class Department {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o)
-            return true;
+        if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+
         Department that = (Department) o;
-        return name != null ? name.equals(that.name) : that.name == null;
+
+        return name.equals(that.name);
     }
 
     @Override
     public int hashCode() {
-        int result = id;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        return result;
+        return name.hashCode();
     }
 
     @Override

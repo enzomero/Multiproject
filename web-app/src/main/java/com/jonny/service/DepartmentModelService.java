@@ -10,15 +10,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.client.RestTemplate;
 
 @Component
-public class DepartmentService {
+public class DepartmentModelService {
 
-    final static String PORT = "9000";
-    final static String LOCALHOST = "http://localhost:";
+    private final static String PORT = "9000";
+    private final static String LOCALHOST = "http://localhost:";
 
     private final RestTemplate rest;
 
     @Autowired
-    private DepartmentService(final RestTemplateBuilder builder){
+    private DepartmentModelService(final RestTemplateBuilder builder){
         this.rest = builder.setConnectTimeout(2000)
                 .setReadTimeout(2000)
                 .build();
@@ -44,10 +44,7 @@ public class DepartmentService {
     }
 
     public void delete(int id){
-        Department department = new Department();
-        department.setId(id);
-        department.setName("");
-        rest.postForLocation(LOCALHOST+PORT+"/department/delete", department);
+        rest.postForLocation(LOCALHOST+PORT+"/department/delete", id);
     }
 
     public void edit(int id, Model model){
