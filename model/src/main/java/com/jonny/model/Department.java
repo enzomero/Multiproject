@@ -41,11 +41,6 @@ public class Department {
     }
 
     @Override
-    public int hashCode() {
-        return name.hashCode();
-    }
-
-    @Override
     public String toString() {
         return " Department { ID = "+id+", NAME = '"+name+"' }";
     }

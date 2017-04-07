@@ -1,5 +1,6 @@
 package com.jonny.dao;
 
+import com.jonny.model.AvgSalaryDepartments;
 import com.jonny.model.Department;
 import org.springframework.stereotype.Repository;
 
@@ -17,4 +18,6 @@ public interface DepartmentDao {
     int delete(int id);
 
     List<Department> getAll();
+
+    List<AvgSalaryDepartments> readAvgSalaryDepartments();
 }

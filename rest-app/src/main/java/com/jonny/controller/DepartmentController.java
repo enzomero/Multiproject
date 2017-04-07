@@ -1,6 +1,7 @@
 package com.jonny.controller;
 
 
+import com.jonny.model.AvgSalaryDepartments;
 import com.jonny.model.Department;
 import com.jonny.service.DepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +38,11 @@ public class DepartmentController {
     @RequestMapping(path = "/delete", method = RequestMethod.POST)
     public void delete(@RequestBody Integer id) {
         service.delete(id);
+    }
+
+    @RequestMapping(path = "/avg", method = RequestMethod.GET)
+    public List<AvgSalaryDepartments> readByAvgSalary()throws Exception{
+        return service.readByAverageSalary();
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.GET)
