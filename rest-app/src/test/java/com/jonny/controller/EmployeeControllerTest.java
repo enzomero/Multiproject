@@ -25,17 +25,13 @@ public class EmployeeControllerTest {
     @InjectMocks
     private EmployeeController sut;
 
-    public static final int VALID_ID = 1;
-    public static final int ZERO_ID = 0;
-    public static final int OVER_ID = 999;
-    public static final int DELETE_ID = 2;
+    private static final int VALID_ID = 1;
+    private static final int OVER_ID = 999;
 
-    public static Date DATE_EARLY = Date.valueOf("1980-01-01");
-    public static Date DATE_OLDER = Date.valueOf("2017-01-01");
+    private static final String DATE_EARLY = "1980-01-01";
+    private static final String DATE_OLDER = "2017-01-01";
 
-    public static final Employee EMPTY_EMP = new Employee();
-    public static final Employee NULL_EMP = null;
-    public static final Employee VALID_EMP = new Employee(
+    private static final Employee VALID_EMP = new Employee(
             VALID_ID,
             "Lname",
             "Mname",
@@ -43,7 +39,7 @@ public class EmployeeControllerTest {
             Date.valueOf("1999-12-31"),
             9999,
             "Department");
-    public static final Employee OVER_ID_EMP = new Employee(
+    private static final Employee OVER_ID_EMP = new Employee(
             OVER_ID,
             "Lname",
             "Mname",
@@ -51,31 +47,7 @@ public class EmployeeControllerTest {
             Date.valueOf("1999-12-31"),
             9999,
             "Department");
-    public static final Employee CREATE_EMP = new Employee(
-            15,
-            "newLname",
-            "newMname",
-            "newSname",
-            Date.valueOf("1998-11-31"),
-            9988,
-            "NewDepartment");
-    public static final Employee INVALID_EMP = new Employee(
-            VALID_ID,
-            "Lname",
-            "Mname",
-            "",
-            Date.valueOf("1999-12-31"),
-            9999,
-            "");
-    public static final Employee ZERO_ID_EMP = new Employee(
-            ZERO_ID,
-            "Lname",
-            "Mname",
-            "Sname",
-            Date.valueOf("1999-12-31"),
-            9999,
-            "Department"
-    );
+
 
     /**
      * --- Testing method: public void create(@RequestBody Employee employee) ---

@@ -65,18 +65,10 @@
 </table>
 
 <form th:action="@{findByDateRange}">
-    <td>
         <input name="earlyDate" th:text="*{earlyDate}" />
-    </td>
-    <td>
-        <input name="oldDate" th:text="*{oldDate}" />
-    </td>
-    <td>
+        <input name="olderDate" th:text="*{olderDate}" />
         <input value="FIND" type="submit"/>
-    </td>
-    <td>
         <a th:href="@{all}">Refresh employee list</a>
-    </td>
 </form>
 
 <footer>

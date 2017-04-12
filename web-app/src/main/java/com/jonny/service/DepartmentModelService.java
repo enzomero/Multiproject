@@ -1,5 +1,6 @@
 package com.jonny.service;
 
+import com.jonny.model.AvgSalaryDepartments;
 import com.jonny.model.Department;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.client.RestTemplateBuilder;
@@ -29,8 +30,7 @@ public class DepartmentModelService {
     }
 
     public void readAll(ModelMap modelMap){
-        Department[] dep = rest.getForObject(LOCALHOST+PORT+"/department/all", Department[].class);
-        modelMap.put("all", dep);
+        modelMap.put("all", rest.getForObject(LOCALHOST+PORT+"/department/all", Department[].class));
     }
 
     public void save(int id, String name){
@@ -53,5 +53,10 @@ public class DepartmentModelService {
 
     private Department readById(@PathVariable int id){
         return rest.getForObject(LOCALHOST+PORT+"/department/{id}", Department.class, id);
+    }
+
+    public void readAvgSalary(ModelMap modelMap){
+        AvgSalaryDepartments[] dep = rest.getForObject("http://localhost:9000/department/avg", AvgSalaryDepartments[].class);
+        modelMap.put("avgsalary", dep);
     }
 }

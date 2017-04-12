@@ -6,7 +6,6 @@ import com.jonny.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.Date;
 import java.util.List;
 
 @RestController
@@ -45,8 +44,8 @@ public class EmployeeController {
         return service.readById(id);
     }
 
-    @RequestMapping(path = "/findByDateRange/{eDate},{oDate}", method = RequestMethod.GET)
-    public List<Employee> findByDateBirthRange(@PathVariable("eDate") Date earlyDate, @PathVariable("oDate") Date olderDate){
+    @RequestMapping(path = "/findByDateRange/{earlyDate},{olderDate}", method = RequestMethod.GET)
+    public List<Employee> findByDateBirthRange(@PathVariable("earlyDate") String earlyDate, @PathVariable("olderDate") String olderDate){
         return service.findByDateRange(earlyDate, olderDate);
     }
 }

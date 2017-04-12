@@ -18,9 +18,9 @@
         <th>NAME</th>
         <th>AVG SALARY</th>
     </tr>
-    <tr th:each="depatrmentaveragesalary:${avgsalary}">
-        <td><span th:text="${depatrmentaveragesalary.departmentName}"></span></td>
-        <td><span th:text="${depatrmentaveragesalary.avgSalary}"></span></td>
+    <tr th:each="avgsalarydepartments:${avgsalary}">
+        <td><span th:text="${avgsalarydepartments.departmentName}"></span></td>
+        <td><span th:text="${avgsalarydepartments.avgSalary}"></span></td>
     </tr>
 </table>
 

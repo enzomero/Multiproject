@@ -49,4 +49,10 @@ public class DepartmentModelController {
         service.edit(Integer.valueOf(id), model);
         return "department/departmentForm";
     }
+
+    @RequestMapping(value = "avgsalary", method = RequestMethod.GET)
+    public String getAvgSalary(ModelMap modelMap){
+        service.readAvgSalary(modelMap);
+        return "department/avgsalary";
+    }
 }

@@ -101,20 +101,10 @@ public class Employee {
 
         Employee employee = (Employee) o;
 
-        if (!lName.equals(employee.lName)) return false;
-        if (!mName.equals(employee.mName)) return false;
-        if (!sName.equals(employee.sName)) return false;
-        if (!date.equals(employee.date)) return false;
-        return department.equals(employee.department);
-    }
-
-    @Override
-    public int hashCode() {
-        int result = lName.hashCode();
-        result = 31 * result + mName.hashCode();
-        result = 31 * result + sName.hashCode();
-        result = 31 * result + date.hashCode();
-        result = 31 * result + department.hashCode();
-        return result;
+        return lName.equals(employee.lName) &&
+                mName.equals(employee.mName) &&
+                sName.equals(employee.sName) &&
+                date.equals(employee.date) &&
+                department.equals(employee.department);
     }
 }

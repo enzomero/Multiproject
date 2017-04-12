@@ -68,8 +68,8 @@ public class EmployeeModelController {
     }
 
     @RequestMapping(value = "findByDateRange")
-    public String find(@RequestParam(value = "earlyDate") String earlyDate, @RequestParam(value = "oldDate") String oldDate, ModelMap modelMap){
-        service.findByDateRange(earlyDate, oldDate, modelMap);
+    public String find(@RequestParam(value = "earlyDate") String earlyDate, @RequestParam(value = "olderDate") String olderDate, ModelMap modelMap){
+        service.findByDateRange(earlyDate, olderDate, modelMap);
         return "employee/all";
     }
 }

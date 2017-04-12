@@ -91,7 +91,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
         }
     }
 
-    private RowMapper<Employee> rowMapper = (rs, rowNum) -> {
+    private final RowMapper<Employee> rowMapper = (rs, rowNum) -> {
         try {
             Employee employee = new Employee();
             employee.setId(rs.getInt("ID"));

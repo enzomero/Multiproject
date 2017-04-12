@@ -2,6 +2,7 @@ package com.jonny.dao.impl;
 
 import com.jonny.dao.DepartmentDao;
 import com.jonny.exception.DaoLayerException;
+import com.jonny.model.AvgSalaryDepartments;
 import com.jonny.model.Department;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -22,6 +23,7 @@ public class DepartmentDaoImpl implements DepartmentDao {
     private static final String DELETE = "DELETE FROM DEPARTMENT WHERE ID = ? ;";
 
     private static final String SELECT_BY_ID = "SELECT * FROM DEPARTMENT WHERE ID = ? ;";
+
     private static final String READ_AVG_SALARY = "SELECT DEPARTMENT, AVG(SALARY) AS SALARY FROM EMPLOYEE GROUP BY DEPARTMENT;";
 
     private final JdbcTemplate jdbcTemplate;
@@ -77,8 +79,27 @@ public class DepartmentDaoImpl implements DepartmentDao {
         }
     }
 
+    @Override
+    public List<AvgSalaryDepartments> readAvgSalaryDepartments() {
+        try {
+            return jdbcTemplate.query(READ_AVG_SALARY, AvgSalaryDepartmentsRowMapper);
+        } catch (DataAccessException e) {
+            throw new DaoLayerException(e.getMessage());
+        }
+    }
 
-    private RowMapper<Department> rowMapper = (rs, rowNum) -> {
+    private final RowMapper<AvgSalaryDepartments> AvgSalaryDepartmentsRowMapper = (rs, rowNum) -> {
+        try {
+            AvgSalaryDepartments avgSalary = new AvgSalaryDepartments();
+            avgSalary.setDepartmentName(rs.getString("DEPARTMENT"));
+            avgSalary.setAvgSalary(rs.getDouble("SALARY"));
+            return avgSalary;
+        } catch (SQLException e) {
+            throw new DaoLayerException(e.getMessage());
+        }
+    };
+
+    private final RowMapper<Department> rowMapper = (rs, rowNum) -> {
         try {
             Department department = new Department();
             department.setId(rs.getInt("ID"));

@@ -23,28 +23,15 @@ public class DepartmentControllerTest {
     @InjectMocks
     private DepartmentController sut;
 
-    public static final int VALID_ID = 1;
-    public static final int DELETE_ID = 2;
-    public static final int ZERO_ID = 0;
-    public static final int OVER_ID = 999;
+    private static final int VALID_ID = 1;
+    private static final int OVER_ID = 999;
 
-    public static final Department EMPTY_DEP = new Department();
-    public static final Department NULL_DEP = null;
-    public static final Department VALID_DEP = new Department(
+    private static final Department VALID_DEP = new Department(
             VALID_ID,
             "ValidName");
-    public static final Department OVER_ID_DEP = new Department(
+    private static final Department OVER_ID_DEP = new Department(
             OVER_ID,
             "OverIdValidName");
-    public static final Department CREATE_DEP = new Department(
-            15,
-            "NewName");
-    public static final Department INVALID_NAME_DEP = new Department(
-            4,
-            "");
-    public static final Department ZERO_ID_DEP = new Department(
-            0,
-            "ZeroIdName");
 
     /**
      * --- Testing method: public void create(@RequestBody Department department) ---

@@ -25,17 +25,15 @@ public class EmployeeServiceTest {
     @InjectMocks
     private EmployeeService sut;
 
-    public static final int VALID_ID = 1;
-    public static final int ZERO_ID = 0;
-    public static final int OVER_ID = 999;
-    public static final int DELETE_ID = 2;
+    private static final int VALID_ID = 1;
+    private static final int ZERO_ID = 0;
+    private static final int OVER_ID = 999;
 
-    public static Date DATE_EARLY = Date.valueOf("1980-01-01");
-    public static Date DATE_OLDER = Date.valueOf("2017-01-01");
+    private static final String DATE_EARLY = "1980-01-01";
+    private static final String DATE_OLDER = "2017-01-01";
 
-    public static final Employee EMPTY_EMP = new Employee();
-    public static final Employee NULL_EMP = null;
-    public static final Employee VALID_EMP = new Employee(
+    private static final Employee NULL_EMP = null;
+    private static final Employee VALID_EMP = new Employee(
             VALID_ID,
             "Lname",
             "Mname",
@@ -43,7 +41,7 @@ public class EmployeeServiceTest {
             Date.valueOf("1999-12-31"),
             9999,
             "Department");
-    public static final Employee OVER_ID_EMP = new Employee(
+    private static final Employee OVER_ID_EMP = new Employee(
             OVER_ID,
             "Lname",
             "Mname",
@@ -51,15 +49,7 @@ public class EmployeeServiceTest {
             Date.valueOf("1999-12-31"),
             9999,
             "Department");
-    public static final Employee CREATE_EMP = new Employee(
-            15,
-            "newLname",
-            "newMname",
-            "newSname",
-            Date.valueOf("1998-11-31"),
-            9988,
-            "NewDepartment");
-    public static final Employee INVALID_EMP = new Employee(
+    private static final Employee INVALID_EMP = new Employee(
             VALID_ID,
             "Lname",
             "Mname",
@@ -67,7 +57,7 @@ public class EmployeeServiceTest {
             Date.valueOf("1999-12-31"),
             9999,
             "");
-    public static final Employee ZERO_ID_EMP = new Employee(
+    private static final Employee ZERO_ID_EMP = new Employee(
             ZERO_ID,
             "Lname",
             "Mname",
@@ -199,25 +189,9 @@ public class EmployeeServiceTest {
     public void findByDateRange_validDates_listEmployeesListMoreThatZero() throws Exception {
         List<Employee> list = new ArrayList<>();
         list.add(VALID_EMP);
-        when(mock.findByDateRange(DATE_EARLY, DATE_OLDER)).thenReturn(list);
+        when(mock.findByDateRange(Date.valueOf(DATE_EARLY), Date.valueOf(DATE_OLDER))).thenReturn(list);
         Assert.assertTrue("Method has to return size bigger of zero, but he didn't.",
                 sut.findByDateRange(DATE_EARLY, DATE_OLDER).size() > 0);
-        verify(mock, times(1)).findByDateRange(DATE_EARLY, DATE_OLDER);
-    }
-
-    @Test
-    public void findByDateRange_onlyOneDate_listEmployeesListMoreThatZero() throws Exception {
-        List<Employee> list = new ArrayList<>();
-        list.add(VALID_EMP);
-        when(mock.findByDateRange(DATE_EARLY, DATE_EARLY)).thenReturn(list);
-        when(mock.findByDateRange(DATE_OLDER, DATE_OLDER)).thenReturn(list);
-
-        Assert.assertTrue("Method has to return size bigger of zero, but he didn't.",
-                sut.findByDateRange(DATE_EARLY, null).size() > 0);
-        Assert.assertTrue("Method has to return size bigger of zero, but he didn't.",
-                sut.findByDateRange(null, DATE_OLDER).size() > 0);
-
-        verify(mock, times(1)).findByDateRange(DATE_EARLY, DATE_EARLY);
-        verify(mock, times(1)).findByDateRange(DATE_OLDER, DATE_OLDER);
+        verify(mock, times(1)).findByDateRange(Date.valueOf(DATE_EARLY), Date.valueOf(DATE_OLDER));
     }
 }

@@ -10,8 +10,6 @@ import org.springframework.web.client.RestTemplate;
 
 import java.sql.Date;
 
-import static org.apache.commons.lang3.StringUtils.isBlank;
-
 @Component
 public class EmployeeModelService {
     private final RestTemplate rest;
@@ -59,17 +57,8 @@ public class EmployeeModelService {
         return rest.getForObject("http://localhost:9000/employee/{id}", Employee.class, id);
     }
 
-    public Object findByDateRange(String earlyDate, String oldDate, ModelMap modelMap) {
-        if (isBlank(earlyDate) && isBlank(oldDate))
-            return modelMap.put("all", rest.getForObject("http://localhost:9000/employee/all",
-                    Employee[].class));
-
-        if (isBlank(earlyDate))
-            return modelMap.put("all", rest.getForObject("http://localhost:9000/employee/findByDateRange/{eDate},{oDate}",
-                    Employee[].class, Date.valueOf(oldDate), Date.valueOf(oldDate)));
-        else
-            return modelMap.put("all", rest.getForObject("http://localhost:9000/employee/findByDateRange/{eDate},{oDate}",
-                    Employee[].class, Date.valueOf(earlyDate), Date.valueOf(earlyDate)));
-
+    public void findByDateRange(String earlyDate, String olderDate, ModelMap modelMap) {
+        modelMap.put("all", rest.getForObject("http://localhost:9000/employee/findByDateRange/{earlyDate},{olderDate}",
+                Employee[].class, earlyDate, olderDate));
     }
 }

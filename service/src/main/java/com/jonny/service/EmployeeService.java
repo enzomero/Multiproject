@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import java.sql.Date;
 import java.util.List;
 
+import static org.apache.commons.lang3.StringUtils.isBlank;
 import static org.apache.commons.lang3.StringUtils.isNoneBlank;
 
 @Service
@@ -49,8 +50,16 @@ public class EmployeeService {
         return employeeDao.getAll();
     }
 
-    public List<Employee> findByDateRange(Date earlyDate, Date olderDate) {
-        return employeeDao.findByDateRange(earlyDate, olderDate);
+    public List<Employee> findByDateRange(String earlyDate, String olderDate) {
+        if (isNoneBlank(earlyDate,olderDate))
+            return employeeDao.findByDateRange(Date.valueOf(earlyDate), Date.valueOf(olderDate));
+        if(isBlank(earlyDate) && isBlank(olderDate))
+            return employeeDao.getAll();
+
+        if (isBlank(earlyDate))
+            return employeeDao.findByDateRange(Date.valueOf(olderDate), Date.valueOf(olderDate));
+        else
+            return employeeDao.findByDateRange(Date.valueOf(earlyDate), Date.valueOf(earlyDate));
     }
 }
 

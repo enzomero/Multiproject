@@ -13,34 +13,28 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 @SpringBootTest(classes = DepartmentDaoImpl.class)
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = TestConfig.class, loader = AnnotationConfigContextLoader.class)
+@ContextConfiguration(classes = DepartmentConfig.class, loader = AnnotationConfigContextLoader.class)
 public class DepartmentDaoImplTest {
 
     @Autowired
-    private DepartmentDaoImpl departmentDao;//Bug in IDE, because @TestConfiguration(in TestConfig.class) is wrong annotation for it.
+    private DepartmentDaoImpl departmentDao;//Bug in IDE, because @TestConfiguration(in DepartmentConfig.class) is wrong annotation for it.
 
-    public static final int VALID_ID = 1;
-    public static final int DELETE_ID = 2;
-    public static final int ZERO_ID = 0;
-    public static final int OVER_ID = 999;
+    private static final int VALID_ID = 1;
+    private static final int DELETE_ID = 2;
+    private static final int ZERO_ID = 0;
+    private static final int OVER_ID = 999;
 
-    public static final Department EMPTY_DEP = new Department();
-    public static final Department NULL_DEP = null;
-    public static final Department VALID_DEP = new Department(
+    private static final Department EMPTY_DEP = new Department();
+    private static final Department NULL_DEP = null;
+    private static final Department VALID_DEP = new Department(
             VALID_ID,
             "ValidName");
-    public static final Department OVER_ID_DEP = new Department(
+    private static final Department OVER_ID_DEP = new Department(
             OVER_ID,
             "OverIdValidName");
-    public static final Department CREATE_DEP = new Department(
+    private static final Department CREATE_DEP = new Department(
             15,
             "NewName");
-    public static final Department INVALID_NAME_DEP = new Department(
-            4,
-            "");
-    public static final Department ZERO_ID_DEP = new Department(
-            0,
-            "ZeroIdName");
 
     /**
      * --- Testing method: public int create(Department department) ---
@@ -48,7 +42,8 @@ public class DepartmentDaoImplTest {
 
     @Test
     public void create_createNewDepartment_Int1() throws Exception {
-        Assert.assertEquals("Method for creating new department in DB has wrong behavior.", 1, departmentDao.create(CREATE_DEP));
+        Assert.assertEquals("Method for creating new department in DB has wrong behavior.",
+                1, departmentDao.create(CREATE_DEP));
     }
 
     @Test(expected = DaoLayerException.class)
