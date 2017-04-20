@@ -14,6 +14,7 @@
         <module>util</module>
         <module>rest-app</module>
         <module>web-app</module>
+        <module>dao-api</module>
     </modules>
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
