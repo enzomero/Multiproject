@@ -6,33 +6,33 @@ import java.sql.Date;
 import java.util.List;
 
 /**
- * Dao interface for Employees
+ * DAO interface for Employee
  */
 public interface EmployeeDao {
     /**
-     *
-     * @param employee
-     * @return
+     * Add new employee.
+     * @param employee - object on based employee's model.
+     * @return 1 - employee was successfully added, 0 - couldn't to add.
      */
     int create(Employee employee);
 
     /**
-     *
-     * @param id
-     * @return
+     * Get employee by id.
+     * @param id - value of field ID from employee's model.
+     * @return Employee with the ID.
      */
     Employee readByID(int id);
 
     /**
-     *
-     * @return
+     * Get list of employees.
+     * @return Employees list.
      */
     List<Employee> getAll();
 
     /**
-     *
-     * @param employee
-     * @return
+     * Update existing employee.
+     * @param employee - object on based employee's model.
+     * @return 1 - employee was successfully updated, 0 - couldn't to add.
      */
     int update(Employee employee);
 

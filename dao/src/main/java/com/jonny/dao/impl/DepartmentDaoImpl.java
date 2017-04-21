@@ -5,38 +5,54 @@ import com.jonny.exception.DaoLayerException;
 import com.jonny.model.AvgSalaryDepartments;
 import com.jonny.model.Department;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.dao.DataAccessException;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.io.Serializable;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Repository
+@PropertySource(value="classpath:requests.properties")
 public class DepartmentDaoImpl implements DepartmentDao {
 
-    private static final String CREATE = "INSERT INTO DEPARTMENT (id, name) VALUES(?, ?) ;";
-    private static final String READ = "SELECT * FROM DEPARTMENT;";
-    private static final String UPDATE = "UPDATE DEPARTMENT SET NAME=? WHERE ID=? ;";
-    private static final String DELETE = "DELETE FROM DEPARTMENT WHERE ID = ? ;";
+    @Value(value = "${sql.dep.create}")
+    private String CREATE;
+    @Value(value = "${sql.dep.read}")
+    private String READ;
+    @Value(value = "${sql.dep.update}")
+    private String UPDATE;
+    @Value(value = "${sql.dep.delete}")
+    private String DELETE;
+    @Value(value = "${sql.dep.read.id}")
+    private String SELECT_BY_ID;
+    @Value(value = "${sql.dep.salary.avg}")
+    private String READ_AVG_SALARY;
+    @Value(value = "#{'${sql.dep.fields}'.split(',')}")
+    private String[] TABLE_FIELD;
+    @Value(value = "#{'${sql.dep.fields.avg}'.split(',')}")
+    private String[] AVG_TABLE_FIELD;
 
-    private static final String SELECT_BY_ID = "SELECT * FROM DEPARTMENT WHERE ID = ? ;";
-
-    private static final String READ_AVG_SALARY = "SELECT DEPARTMENT, AVG(SALARY) AS SALARY FROM EMPLOYEE GROUP BY DEPARTMENT;";
-
-    private final JdbcTemplate jdbcTemplate;
+    private final NamedParameterJdbcTemplate template;
 
     @Autowired
-    public DepartmentDaoImpl(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
+    public DepartmentDaoImpl(NamedParameterJdbcTemplate template) {
+        this.template = template;
     }
 
     @Override
     public int create(Department department) {
         try {
-            return jdbcTemplate.update(CREATE, getPreparedStatementSetter(department));
+            Map<String, java.io.Serializable> map = new HashMap<>();
+            map.put(TABLE_FIELD[0], null);
+            map.put(TABLE_FIELD[1], department.getName());
+            return template.update(CREATE, map);
         } catch (DataAccessException | NullPointerException e) {
             throw new DaoLayerException(e.getMessage());
         }
@@ -45,7 +61,9 @@ public class DepartmentDaoImpl implements DepartmentDao {
     @Override
     public Department read(int id) {
         try {
-            return jdbcTemplate.queryForObject(SELECT_BY_ID, rowMapper, id);
+            Map<String, java.io.Serializable> map = new HashMap<>();
+            map.put(TABLE_FIELD[0], id);
+            return template.queryForObject(SELECT_BY_ID, map, rowMapper);
         } catch (DataAccessException e) {
             throw new DaoLayerException(e.getMessage());
         }
@@ -54,8 +72,10 @@ public class DepartmentDaoImpl implements DepartmentDao {
     @Override
     public int update(Department department) {
         try {
-            return jdbcTemplate.update(UPDATE, department.getName(),
-                    department.getId());
+            Map<String, Serializable> map = new HashMap<>();
+            map.put(TABLE_FIELD[0], department.getId());
+            map.put(TABLE_FIELD[1], department.getName());
+            return template.update(UPDATE, map);
         } catch (DataAccessException | NullPointerException e) {
             throw new DaoLayerException(e.getMessage());
         }
@@ -64,7 +84,9 @@ public class DepartmentDaoImpl implements DepartmentDao {
     @Override
     public int delete(int id) {
         try {
-            return jdbcTemplate.update(DELETE, id);
+            Map<String, java.io.Serializable> map = new HashMap<>();
+            map.put(TABLE_FIELD[0], id);
+            return template.update(DELETE, map);
         } catch (DataAccessException e) {
             throw new DaoLayerException(e.getMessage());
         }
@@ -73,7 +95,7 @@ public class DepartmentDaoImpl implements DepartmentDao {
     @Override
     public List<Department> getAll() {
         try {
-            return jdbcTemplate.query(READ, rowMapper);
+            return template.query(READ, rowMapper);
         } catch (DataAccessException e) {
             throw new DaoLayerException(e.getMessage());
         }
@@ -82,7 +104,7 @@ public class DepartmentDaoImpl implements DepartmentDao {
     @Override
     public List<AvgSalaryDepartments> readAvgSalaryDepartments() {
         try {
-            return jdbcTemplate.query(READ_AVG_SALARY, AvgSalaryDepartmentsRowMapper);
+            return template.query(READ_AVG_SALARY, AvgSalaryDepartmentsRowMapper);
         } catch (DataAccessException e) {
             throw new DaoLayerException(e.getMessage());
         }
@@ -91,8 +113,8 @@ public class DepartmentDaoImpl implements DepartmentDao {
     private final RowMapper<AvgSalaryDepartments> AvgSalaryDepartmentsRowMapper = (rs, rowNum) -> {
         try {
             AvgSalaryDepartments avgSalary = new AvgSalaryDepartments();
-            avgSalary.setDepartmentName(rs.getString("DEPARTMENT"));
-            avgSalary.setAvgSalary(rs.getDouble("SALARY"));
+            avgSalary.setDepartmentName(rs.getString(AVG_TABLE_FIELD[0]));
+            avgSalary.setAvgSalary(rs.getDouble(AVG_TABLE_FIELD[1]));
             return avgSalary;
         } catch (SQLException e) {
             throw new DaoLayerException(e.getMessage());
@@ -102,23 +124,11 @@ public class DepartmentDaoImpl implements DepartmentDao {
     private final RowMapper<Department> rowMapper = (rs, rowNum) -> {
         try {
             Department department = new Department();
-            department.setId(rs.getInt("ID"));
-            department.setName(rs.getString("NAME"));
+            department.setId(rs.getInt(TABLE_FIELD[0]));
+            department.setName(rs.getString(TABLE_FIELD[1]));
             return department;
         } catch (SQLException e) {
             throw new DaoLayerException(e.getMessage());
         }
     };
-
-    private PreparedStatementSetter getPreparedStatementSetter(final Department department) {
-        return ps -> {
-            try {
-                int i = 0;
-                ps.setNull(++i, department.getId());
-                ps.setString(++i, department.getName());
-            } catch (SQLException e) {
-                throw new DaoLayerException(e.getMessage());
-            }
-        };
-    }
 }
