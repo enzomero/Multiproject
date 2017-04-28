@@ -15,7 +15,7 @@ public class RestExceptionHandler {
         return "DataAccessException: " + ex.getLocalizedMessage();
     }
 
-    @ExceptionHandler(InvalidParameterException.class)
+    //@ExceptionHandler(InvalidParameterException.class)
     public @ResponseBody
     String someMethod2(InvalidParameterException ex){
         return "InvalidParameterException: " + ex.getLocalizedMessage();

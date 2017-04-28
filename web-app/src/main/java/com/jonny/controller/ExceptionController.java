@@ -24,14 +24,4 @@ public class ExceptionController {
         LOGGER.error("Exception message:" + ex.getLocalizedMessage());
         return mav;
     }
-
-    //@ExceptionHandler(IllegalArgumentException.class)
-    public ModelAndView handleIllegalArgumentException(HttpServletRequest req, Exception ex) {
-        ModelAndView mav = new ModelAndView();
-        mav.addObject("message", "You have bad parameter");
-        mav.addObject("exception", ex);
-        mav.addObject("url", req.getRequestURL());
-        mav.setViewName("exception");
-        return mav;
-    }
 }
