@@ -63,22 +63,22 @@ public class DepartmentDaoImplTest {
     }
 
     /**
-     * --- Testing method: public Department read(int id) ---
+     * --- Testing method: public Department readById(int id) ---
      */
 
     @Test
     public void read_byValidId_Department() throws Exception {
-        Assert.assertEquals("Method for reading department by ID has wrong behavior.", 1, departmentDao.read(VALID_ID).getId());
+        Assert.assertEquals("Method for reading department by ID has wrong behavior.", 1, departmentDao.readById(VALID_ID).getId());
     }
 
     @Test(expected = DaoLayerException.class)
     public void read_byZeroId_DaoLayerException() throws Exception {
-        departmentDao.read(ZERO_ID);
+        departmentDao.readById(ZERO_ID);
     }
 
     @Test(expected = DaoLayerException.class)
     public void read_byOverId_DaoLayerException() throws Exception {
-        departmentDao.read(OVER_ID);
+        departmentDao.readById(OVER_ID);
     }
 
     /**

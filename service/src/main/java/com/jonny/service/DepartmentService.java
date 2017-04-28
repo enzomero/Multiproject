@@ -30,7 +30,7 @@ public class DepartmentService {
     public Department readById(int id) {
         if (id == 0)
             throw new InvalidParameterException("Department wasn't found by ID = "+id+".");
-        return departmentDao.read(id);
+        return departmentDao.readById(id);
     }
 
     public int update(Department department) {

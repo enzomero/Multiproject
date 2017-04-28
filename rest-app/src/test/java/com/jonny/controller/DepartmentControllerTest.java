@@ -97,7 +97,7 @@ public class DepartmentControllerTest {
     }
 
     /**
-     * --- Testing method: public Department read(@PathVariable("id") int id) ---
+     * --- Testing method: public Department readById(@PathVariable("id") int id) ---
      */
 
     @Test

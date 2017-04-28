@@ -59,7 +59,7 @@ public class DepartmentDaoImpl implements DepartmentDao {
     }
 
     @Override
-    public Department read(int id) {
+    public Department readById(int id) {
         try {
             Map<String, java.io.Serializable> map = new HashMap<>();
             map.put(TABLE_FIELD[0], id);

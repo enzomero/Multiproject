@@ -110,7 +110,7 @@ public class EmployeeControllerTest {
     }
 
     /**
-     * --- Testing method: public Employee read(@PathVariable("id") int id) ---
+     * --- Testing method: public Employee readById(@PathVariable("id") int id) ---
      */
 
     @Test

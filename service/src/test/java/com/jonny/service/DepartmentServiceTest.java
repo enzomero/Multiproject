@@ -69,10 +69,10 @@ public class DepartmentServiceTest {
 
     @Test
     public void readById_validIdArg_ValidDepartment() throws Exception {
-        when(mock.read(VALID_ID)).thenReturn(VALID_DEP);
+        when(mock.readById(VALID_ID)).thenReturn(VALID_DEP);
         Assert.assertEquals("Method for reading department by id="+VALID_ID+" has wrong behavior.",
                 VALID_DEP, sut.readById(VALID_ID));
-        verify(mock, times(1)).read(VALID_ID);
+        verify(mock, times(1)).readById(VALID_ID);
     }
 
     @Test(expected = InvalidParameterException.class)

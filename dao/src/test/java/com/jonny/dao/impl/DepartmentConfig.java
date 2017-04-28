@@ -4,14 +4,14 @@ import org.apache.tomcat.jdbc.pool.DataSource;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
 @ComponentScan(basePackages = "com.jonny.dao")
 @TestConfiguration
 public class DepartmentConfig {
     @Bean
-    public JdbcTemplate getJdbcTemplate() {
-        return new JdbcTemplate(getDataSource());
+    public NamedParameterJdbcTemplate getJdbcTemplate() {
+        return new NamedParameterJdbcTemplate(getDataSource());
     }
 
     @Bean

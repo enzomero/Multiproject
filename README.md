@@ -1,8 +1,8 @@
 # Multiproject
 My Spring boot project for my portfolio.
-Use Maven commands for run tests:
+Use Maven:
 
-    mvn test
+    mvn clean install
 
 Use Maven commands for run applications:
 
@@ -12,3 +12,6 @@ Use Maven commands for run applications:
     'cd web-app mvn spring-boot:run'
 
 and open link http://localhost:8080
+
+
+
