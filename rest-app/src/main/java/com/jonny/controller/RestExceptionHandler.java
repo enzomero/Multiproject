@@ -11,13 +11,13 @@ public class RestExceptionHandler {
 
     @ExceptionHandler(DaoLayerException.class)
     public @ResponseBody
-    String someMethod(DaoLayerException ex){
+    String handlerDaoLayerException(DaoLayerException ex){
         return "DataAccessException: " + ex.getLocalizedMessage();
     }
 
-    //@ExceptionHandler(InvalidParameterException.class)
+    @ExceptionHandler(InvalidParameterException.class)
     public @ResponseBody
-    String someMethod2(InvalidParameterException ex){
+    String handlerInvalidParameterException(InvalidParameterException ex){
         return "InvalidParameterException: " + ex.getLocalizedMessage();
     }
 }

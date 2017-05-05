@@ -21,7 +21,7 @@ class AspectLogger {
      * @param error subclass object of RuntimeException
      */
     @AfterThrowing(
-            pointcut = " execution(* com.jonny.service.*.*(..))",
+            pointcut = " execution(* com.jonny.*.*(..))",
             throwing = "error")
     public void addAfterThrowingService(JoinPoint joinPoint, RuntimeException error) {
         LOGGER.error("Throwing '" + error.getClass().getName() + "' into method '" + joinPoint.getSignature().getDeclaringTypeName() + "." + joinPoint.getSignature().getName() + "'");
