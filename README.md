@@ -1,5 +1,5 @@
-# Multiproject
-My Spring boot project for my portfolio.
+# Multi-project
+Spring boot project for demo.
 Use Maven:
 
     mvn clean install
