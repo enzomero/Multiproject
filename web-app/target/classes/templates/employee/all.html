@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="ISO-8859-1"/>
+    <title>Employees</title>
+    <link rel="stylesheet" href="../../static/css/style.css" th:href="@{/css/style.css}" />
+</head>
+<body>
+<div id="header">
+    <h1>Employees</h1>
+</div>
+
+<form>
+    <p>
+        <a th:href="@{/}">Home</a>
+    </p>
+    <p>
+        <a th:href="@{create}" >Add new Employee</a>
+    </p>
+</form>
+
+<table>
+    <tr>
+        <th>ID</th>
+        <th>LONG NAME</th>
+        <th>MIDDLE NAME</th>
+        <th>SHORT NAME</th>
+        <th>DATE</th>
+        <th>SALARY</th>
+        <th>DEPARTMENT</th>
+    </tr>
+    <tr th:each="employee:${all}">
+        <td>
+            <span th:text="${employee.id}" ></span>
+        </td>
+        <td>
+            <span th:text="${employee.lName}" ></span>
+        </td>
+        <td>
+            <span th:text="${employee.mName}" ></span>
+        </td>
+        <td>
+            <span th:text="${employee.sName}" ></span>
+        </td>
+        <td>
+            <span th:text="${employee.date}" ></span>
+        </td>
+        <td>
+            <span th:text="${employee.salary}" ></span>
+        </td>
+        <td>
+            <span th:text="${employee.department}" ></span>
+        </td>
+        <td>
+            <a th:href="@{edit(id = ${employee.id})}" >
+                Edit
+            </a>
+        </td>
+        <td>
+            <a th:href="@{delete(id = ${employee.id})}">
+                Delete
+            </a>
+        </td>
+    </tr>
+</table>
+
+<form th:action="@{findByDateRange}">
+        <input name="earlyDate" th:text="*{earlyDate}" />
+        <input name="olderDate" th:text="*{olderDate}" />
+        <input value="FIND" type="submit"/>
+        <a th:href="@{all}">Refresh employee list</a>
+</form>
+
+<footer>
+</footer>
+</body>
+</html>
